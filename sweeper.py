@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import ttk
-
-
+import random
 
 
 def draw_mine_field(x=5, y=3):
 
 	mine_frame = tk.Toplevel(root)
 	mine_frame.grid()
+	root.withdraw()
 
 	for b in range(y):
 		for a in range(x):
@@ -17,7 +17,7 @@ def draw_mine_field(x=5, y=3):
 root = tk.Tk()
 root.title("MS")
 
-mainframe = ttk.Frame(root)
+startframe = ttk.Frame(root)
 
 ttk.Label(root,text="y").grid(row=1,column=1)
 y_entry_box = ttk.Entry(root).grid(row=1,column=2)
