@@ -1,0 +1,15 @@
+
+
+data...
+
+squares[x][y]{
+	dict:
+		mine y/n
+		flag y/n
+		prox_num int  #num of adjacent mines.
+}
+
+x, y
+
+
+classes...?

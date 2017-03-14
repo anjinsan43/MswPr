@@ -1,0 +1,29 @@
+
+flow:
+intro screen>>[pick size,seed, num of mines] or [quit]
+<intro screen updates with (%_of_mines to num_of_mines) vs (x*y), rounded>
+
+	create [mine_field]
+		if rand < (mines/num_of_sq):
+			mine
+		else:
+			no mine
+	
+	
+
+user left clicks...
+	mine?
+		game over
+	open square?
+		open the field (remove button widgets/replace w/ labels)
+		draw new numbers in right position
+
+user right clicks...
+	untapped square?
+		place flag
+	already untapped?
+		pass
+		
+User clicks 'done'...
+	show mines: Lose (prorate points??)
+	if no unflagged mines: WIN!
