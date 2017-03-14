@@ -9,8 +9,8 @@ def draw_mine_field(x=5, y=3):
 	mine_frame.grid()
 	root.withdraw()
 
-	for b in range(y):
-		for a in range(x):
+	for a in range(x):
+		for b in range(y):
 			ttk.Button(mine_frame, text='*', width=3 ).grid(column=a, row=b)
 
 

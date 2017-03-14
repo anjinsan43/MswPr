@@ -1,19 +1,23 @@
 
 flow:
 intro screen>>[pick size,seed, num of mines] or [quit]
-<intro screen updates with (%_of_mines to num_of_mines) vs (x*y), rounded>
+<intro screen dynamically updates entry boxes with (%_of_mines to num_of_mines) vs (x*y), rounded>
 
 	create [mine_field]
 		if rand < (mines/num_of_sq):
 			mine
 		else:
 			no mine
-	
-	
 
+	parse_mine_field
+		update squares_dict[x][y]:prox_num
+			
+	
+Ready.
 user left clicks...
 	mine?
 		game over
+		show all mines
 	open square?
 		open the field (remove button widgets/replace w/ labels)
 		draw new numbers in right position
@@ -26,4 +30,4 @@ user right clicks...
 		
 User clicks 'done'...
 	show mines: Lose (prorate points??)
-	if no unflagged mines: WIN!
+	if all mines flagged: WIN!
