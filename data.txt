@@ -12,4 +12,13 @@ squares[x][y]{
 x, y
 
 
-classes...?
+
+
+as a class...?  yes.
+
+class Square(self):
+	
+	def __init__(self):
+		self.mine_yn = False
+		self.flag_yn = False
+		self.prox_num = 0  #parser() will change this.
