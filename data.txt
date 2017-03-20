@@ -1,17 +1,17 @@
 
 
 data...
+                  0*3+X, 1*3+x, etc...
+x, y  (2D array)  x x x, x x x, x x *, x x x
+  0 1 2
+0 x x x
+1 x x x
+2 x x *
+3 x x x
 
-squares[x][y]{
-	dict:
-		mine y/n
-		flag y/n
-		prox_num int  #num of adjacent mines.
-}
+'*' space = (x + y*row_len)
 
-x, y
-
-
+square = []
 
 
 as a class...?  yes.
