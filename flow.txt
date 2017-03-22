@@ -15,6 +15,11 @@ intro screen>>[pick size,seed, num of mines] or [quit]
 	
 Ready.
 user left clicks...
+
+how to process a click?
+
+
+decide
 	mine?
 		game over
 		show all mines
