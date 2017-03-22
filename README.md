@@ -1,2 +1,2 @@
-# mine_sweeper
-buttons, mines, numbers, all in platform indy python/tkinter
+# MineSwpr
+buttons, mines, numbers, all in python/tkinter
