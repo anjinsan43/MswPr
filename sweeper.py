@@ -2,19 +2,19 @@ import tkinter as tk
 #messagebox is not imported automatically w/ tkinter
 from tkinter import messagebox as tkMessageBox
 from tkinter import ttk
-import random
+from random import random as rand
 
 
-class Square(self, bnt=ttk.Button, x,y):
-""" container class for each square """
-	def __init__(self):
-		self.mine_yn = False
-		self.flag_yn = False
-		self.prox_num = 0  #parser() will change this.
-		self.x = x
-		self.y = y
-		self.button = bnt
-		
+class Square(object):
+    """ container class for each square """
+    def __init__(self):
+        self.mine_yn = False
+        self.flag_yn = False
+        self.prox_num = 0  #parser() will change this.
+        self.x = None
+        self.y = None
+        self.button = None
+        
 
 def draw_mine_field():
     global sqr_list
@@ -29,20 +29,22 @@ def draw_mine_field():
     
     root.withdraw()
 
-	# create grid of squares (buttons)
-    for a in range(int(x_str.get() )):
-        for b in range(int(y_str.get() )):
-            sqr_list.append(object)
-            btn_tmp = ttk.Button(mine_frame, text='[]', width=3 )
+    # create grid of squares (buttons)
+    for x in range(int(x_str.get() )):
+        for y in range(int(y_str.get() )):
+            sqr_list.append(Square)
+            sqr_list[-1].button = ttk.Button(mine_frame, text=' ', width=3 )
+            sqr_list[-1].button.grid(column=x, row=y)
+			sqr_list[-1].x = x
+			sqr_list[-1].y = y
+			
+			#populate with mines
+			if (r)
+	
+#def parse_mines:
+#   for i in sqr_list
+        
             
-			sqr_list[-1].grid(column=a, row=b)
-
-
-def parse_mines:
-
-	for i in 
-			
-			
 def root_close():
     if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
         root.destroy()
