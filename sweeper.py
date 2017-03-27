@@ -6,7 +6,7 @@ from random import random as rand
 
 
 class Square(object):
-    """ container class for each square """
+    """ container class to use for each square """
     def __init__(self):
         self.mine_yn = False
         self.flag_yn = False
@@ -16,7 +16,7 @@ class Square(object):
         self.button = None
         
 
-def draw_mine_field():
+def create_mine_field():
     global sqr_list
     global mine_frame
     
@@ -33,16 +33,24 @@ def draw_mine_field():
     for x in range(int(x_str.get() )):
         for y in range(int(y_str.get() )):
             sqr_list.append(Square)
-            sqr_list[-1].button = ttk.Button(mine_frame, text=' ', width=3 )
+            sqr_list[-1].x = x
+            sqr_list[-1].y = y
+            
+            #populate with mines
+            if ( rand()*100 < int(mines_pct_str.get()) ):
+                sqr_list[-1].mine_yn = True
+            else:
+                sqr_list[-1].mine_yn = False
+
+            # draw boxes
+            if sqr_list[-1].mine_yn:
+                t = '*'
+            else: t = ' '
+            sqr_list[-1].button = ttk.Button(mine_frame, text=t, width=3 )
             sqr_list[-1].button.grid(column=x, row=y)
-			sqr_list[-1].x = x
-			sqr_list[-1].y = y
-			
-			#populate with mines
-			if (r)
-	
-#def parse_mines:
-#   for i in sqr_list
+            
+def parse_mines:
+   for i in sqr_list
         
             
 def root_close():
@@ -86,7 +94,7 @@ mines_entry_box.pack() #grid(row=1,column=4)
 
 
 #Start and Quit buttons
-start_button = ttk.Button(root,text="Start",command=draw_mine_field)
+start_button = ttk.Button(root,text="Start",command=create_mine_field)
 start_button.pack() #grid(row=2,column=1)
 quit_button = ttk.Button(root,text="Quit",command=root.destroy)
 quit_button.pack() #grid(row=2,column=2)
