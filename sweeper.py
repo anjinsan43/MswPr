@@ -58,7 +58,7 @@ def parse_mines():
     #loop over dictionary keys(coordinates)
         #look at the 8 adjacent squares
         #catch NameError for edges of board
-    def try_a_sqare(sq): #Square instance
+    def try_a_sqare(sq): #sq = Square instance
         try:
             if sqr_dict[sq].mine_yn = True:  return 1
             if sqr_dict[sq].mine_yn = False: return 0
