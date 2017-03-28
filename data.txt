@@ -14,12 +14,12 @@ x, y  (2D array)  x x x, x x x, x x *, x x x
 square = []
 
 
-
-class Square(self, ttk.Button, x,y):
-	
-	def __init__(self):
-		self.mine_yn = False
-		self.flag_yn = False
-		self.prox_num = 0  #parser() will change this.
-		self.x = x
-		self.y = y
+class Square(object):
+    """ container class to use for each square """
+    def __init__(self):
+        self.mine_yn = False
+        self.flag_yn = False
+        self.prox_num = 0  #parser() will change this.
+        self.button = None
+		
+sqr_dict {"x0y0": Square instance, "x1y0": Square instance }

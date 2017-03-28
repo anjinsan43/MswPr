@@ -10,21 +10,20 @@ class Square(object):
     def __init__(self):
         self.mine_yn = False
         self.flag_yn = False
-        self.prox_num = 0  #parser() will change this.
-        self.x = None
-        self.y = None
-        self.button = None
+        self.prox_num = 0   # parser() will change this.
+        self.button = None  # ttk.Button instance.
         
 
 def create_mine_field():
     global sqr_list
     global mine_frame
+    global sqr_dict
     
-    sqr_list = []
+    sqr_dict = {}
     
     mine_frame = tk.Toplevel(root)
     mine_frame.grid()
-    #user hit 'X' to close window.
+    #what to do if user hit 'X' to close window.
     mine_frame.protocol("WM_DELETE_WINDOW", mine_frame_close)
     
     root.withdraw()
@@ -32,25 +31,32 @@ def create_mine_field():
     # create grid of squares (buttons)
     for x in range(int(x_str.get() )):
         for y in range(int(y_str.get() )):
-            sqr_list.append(Square)
-            sqr_list[-1].x = x
-            sqr_list[-1].y = y
+            coord = 'x'+str(x) + 'y'+str(y)
+            sqr_dict[coord] = Square #sqr_list.append(Square)
+            #sqr_list[-1].x = x
+            #sqr_list[-1].y = y
             
             #populate with mines
             if ( rand()*100 < int(mines_pct_str.get()) ):
-                sqr_list[-1].mine_yn = True
+                sqr_dict[coord].mine_yn = True #sqr_list[-1].mine_yn = True
             else:
-                sqr_list[-1].mine_yn = False
+                sqr_dict[coord].mine_yn = False #sqr_list[-1].mine_yn = False
 
             # draw boxes
-            if sqr_list[-1].mine_yn:
+            if sqr_dict[coord].mine_yn:  #sqr_list[-1].mine_yn:
                 t = '*'
             else: t = ' '
-            sqr_list[-1].button = ttk.Button(mine_frame, text=t, width=3 )
-            sqr_list[-1].button.grid(column=x, row=y)
             
-def parse_mines:
-   for i in sqr_list
+            #sqr_list[-1].button = ttk.Button(mine_frame, text=t, width=3 )
+            #sqr_list[-1].button.grid(column=x, row=y)
+            sqr_dict[coord].button = ttk.Button(mine_frame, text=t, width=3 )
+            sqr_dict[coord].button.grid(column=x, row=y)
+            # done, next: parse!
+
+def parse_mines():
+	loop over dictionary keys (coordinates)
+		look at the 8 adjacent squares
+		catch NameError for edges of board
         
             
 def root_close():
