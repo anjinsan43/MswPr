@@ -23,6 +23,7 @@ def create_mine_field():
     
     mine_frame = tk.Toplevel(root)
     mine_frame.grid()
+    
     #what to do if user hit 'X' to close window.
     mine_frame.protocol("WM_DELETE_WINDOW", mine_frame_close)
     
@@ -54,11 +55,21 @@ def create_mine_field():
             # done, next: parse!
 
 def parse_mines():
-	loop over dictionary keys (coordinates)
-		look at the 8 adjacent squares
-		catch NameError for edges of board
-        
+    #loop over dictionary keys(coordinates)
+        #look at the 8 adjacent squares
+        #catch NameError for edges of board
+    def try_a_sqare(sq): #Square instance
+        try:
+            if sqr_dict[sq].mine_yn = True:  return 1
+            if sqr_dict[sq].mine_yn = False: return 0
+        except NameError:
+            return 0
             
+
+    for i in sqr_dict:  # i is a key/string
+		#use regex for splitting x,y
+		
+		
 def root_close():
     if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
         root.destroy()
