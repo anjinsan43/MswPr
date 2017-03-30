@@ -13,7 +13,43 @@ class Square(object):
         self.prox_num = 0   # number of nearby mines, parser() will fill this in.
         self.button = None  # ttk.Button instance.
         
-
+def parse_mines():
+    global sqr_dict
+    print('parse_mines, sqr_dict='+str(sqr_dict))
+    #x=1  #debug
+    #y=1  #debug
+    #loop over dictionary keys(coordinates)
+        #look at the 8 adjacent squares
+        #catch NameError for edges of board
+    def try_a_square(sq): #sq = coordinate string(key)
+        try:
+            if sqr_dict[sq].mine_yn == True:  return 1
+            if sqr_dict[sq].mine_yn == False: return 0
+        except KeyError:
+            print('KeyError for '+sq)
+            return 0
+            
+    n = 0
+    for x in range(int(x_str.get() )):
+        for y in range(int(y_str.get() )):
+            n = n + try_a_square('x'+str(x+1)+'y'+str(y+1))
+            n = n + try_a_square('x'+str(x+1)+'y'+str(y  ))
+            n = n + try_a_square('x'+str(x+1)+'y'+str(y-1))
+            n = n + try_a_square('x'+str(x  )+'y'+str(y+1))
+            n = n + try_a_square('x'+str(x  )+'y'+str(y-1))
+            n = n + try_a_square('x'+str(x-1)+'y'+str(y+1))
+            n = n + try_a_square('x'+str(x-1)+'y'+str(y  ))
+            n = n + try_a_square('x'+str(x-1)+'y'+str(y-1))
+            if sqr_dict['x'+str(x)+'y'+str(y)].mine_yn == False:
+                sqr_dict['x'+str(x)+'y'+str(y)].prox_num = n
+            
+            print('x'+str(x)+'y'+str(y)+': '+str(n)) #(debug) print n for each sq
+            sqr_dict['x'+str(x)+'y'+str(y)].button.text=(str(n)) #(debug) show n on each button. (not working)
+            n = 0
+            #root.update()
+            
+        
+        
 def create_mine_field():
     global mine_frame
     global sqr_dict
@@ -52,41 +88,7 @@ def create_mine_field():
             #mine_frame.update() #???
             parse_mines()
 
-def parse_mines():
-    global sqr_dict
-    print('parse_mines, sqr_dict='+str(sqr_dict))
-    #x=1  #debug
-    #y=1  #debug
-    #loop over dictionary keys(coordinates)
-        #look at the 8 adjacent squares
-        #catch NameError for edges of board
-    def try_a_square(sq): #sq = coordinate string(key)
-        try:
-            if sqr_dict[sq].mine_yn == True:  return 1
-            if sqr_dict[sq].mine_yn == False: return 0
-        except KeyError:
-            print('KeyError for '+sq)
-            return 0
-           
-            
-    n = 1 #after debugging change back to 0 when done
-    for x in range(int(x_str.get() )):
-        for y in range(int(y_str.get() )):
-            n = n + try_a_square('x'+str(x+1)+'y'+str(y+1))
-            n = n + try_a_square('x'+str(x+1)+'y'+str(y  ))
-            n = n + try_a_square('x'+str(x+1)+'y'+str(y-1))
-            n = n + try_a_square('x'+str(x  )+'y'+str(y+1))
-            n = n + try_a_square('x'+str(x  )+'y'+str(y-1))
-            n = n + try_a_square('x'+str(x-1)+'y'+str(y+1))
-            n = n + try_a_square('x'+str(x-1)+'y'+str(y  ))
-            n = n + try_a_square('x'+str(x-1)+'y'+str(y-1))
-            if sqr_dict['x'+str(x)+'y'+str(y)].mine_yn == False: pass
-                #sqr_dict['x'+str(x)+'y'+str(y)].prox_num = n
-            print('n='+str(n))
-            #print('x'+str(x)+'y'+str(y)+': '+str(n)) #(debug) print n for each sq
-            #sqr_dict['x'+str(x)+'y'+str(y)].button.text=(str(n)) #(debug) show n on each button. (not working) BUG HERE!
-            #root.update()
-        
+
 
 def root_close():
     if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
