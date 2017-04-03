@@ -6,21 +6,19 @@ from random import random as rand
 
 
 class Square(object):
-    """ container class to use for each square """
+    """ class to use for each square """
     def __init__(self):
         self.mine_yn = False
         self.flag_yn = False
-        self.prox_num = 0   # number of nearby mines, parser() will fill this in.
+        self.prox_num = 0   # number of nearby mines, parse_mines() will fill this in.
         self.button = None  # ttk.Button instance.
         
 def parse_mines():
+    """Look at how many mines are next to a given square,
+    store in each Square instance that is inside of sqr_dict. """
     global sqr_dict
-    print('parse_mines, sqr_dict='+str(sqr_dict))
-    #x=1  #debug
-    #y=1  #debug
-    #loop over dictionary keys(coordinates)
-        #look at the 8 adjacent squares
-        #catch NameError for edges of board
+    print('in parse_mines, sqr_dict='+str(sqr_dict))
+
     def try_a_square(sq): #sq = coordinate string(key)
         try:
             if sqr_dict[sq].mine_yn == True:  return 1
@@ -32,6 +30,7 @@ def parse_mines():
     n = 0
     for x in range(int(x_str.get() )):
         for y in range(int(y_str.get() )):
+            #check the 8 adjacent squares.
             n = n + try_a_square('x'+str(x+1)+'y'+str(y+1))
             n = n + try_a_square('x'+str(x+1)+'y'+str(y  ))
             n = n + try_a_square('x'+str(x+1)+'y'+str(y-1))
@@ -84,7 +83,7 @@ def create_mine_field():
             sqr_dict[coord].button = ttk.Button(mine_frame, text=t, width=3 )
             sqr_dict[coord].button.grid(column=x, row=y)
             # done, next: parse!
-            print('create_mines, sqr_dict='+str(sqr_dict))
+            print('in create_mines, sqr_dict='+str(sqr_dict))
             #mine_frame.update() #???
             parse_mines()
 
@@ -94,7 +93,7 @@ def root_close():
     if tkMessageBox.askokcancel("Quit", "Do you want to quit?"):
         root.destroy()
 
-def mine_frame_close():
+def mine_frame_close(): #back to main menu
     root.deiconify()  # un-withdraw root
     mine_frame.destroy()
 
