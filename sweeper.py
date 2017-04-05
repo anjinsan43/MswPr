@@ -16,7 +16,7 @@ class Square(object):
 def parse_mines():
     """Look at how many mines are next to a given square,
     store in each Square instance that is inside of sqr_dict. """
-    global sqr_dict
+    #global sqr_dict
     print('in parse_mines, sqr_dict='+str(sqr_dict))
 
     def try_a_square(sq): #sq = coordinate string(key)
@@ -39,11 +39,11 @@ def parse_mines():
             n = n + try_a_square('x'+str(x-1)+'y'+str(y+1))
             n = n + try_a_square('x'+str(x-1)+'y'+str(y  ))
             n = n + try_a_square('x'+str(x-1)+'y'+str(y-1))
-            if sqr_dict['x'+str(x)+'y'+str(y)].mine_yn == False:
-                sqr_dict['x'+str(x)+'y'+str(y)].prox_num = n
+            #if sqr_dict[('x'+str(x)+'y'+str(y))].mine_yn == False:
+            #(sqr_dict[('x'+str(x)+'y'+str(y))]).prox_num = n
             
             print('x'+str(x)+'y'+str(y)+': '+str(n)) #(debug) print n for each sq
-            sqr_dict['x'+str(x)+'y'+str(y)].button.text=(str(n)) #(debug) show n on each button. (not working)
+            sqr_dict[('x'+str(x)+'y'+str(y))].button.text=(str(n)) #(debug) show n on each button. (not working)
             n = 0
             #root.update()
             
@@ -67,7 +67,7 @@ def create_mine_field():
     for x in range(int(x_str.get() )):
         for y in range(int(y_str.get() )):
             coord = 'x'+str(x) + 'y'+str(y)
-            sqr_dict[coord] = Square 
+            sqr_dict[coord] = Square()
             #print('coord='+coord) #debug
             #populate with mines
             if ( rand()*100 < int(mines_pct_str.get()) ):
@@ -84,7 +84,7 @@ def create_mine_field():
             sqr_dict[coord].button.grid(column=x, row=y)
             # done, next: parse!
             print('in create_mines, sqr_dict='+str(sqr_dict))
-            #mine_frame.update() #???
+            mine_frame.update() #???
             parse_mines()
 
 
@@ -97,7 +97,7 @@ def mine_frame_close(): #back to main menu
     root.deiconify()  # un-withdraw root
     mine_frame.destroy()
 
-    
+
 root = tk.Tk()
 root.title("MS")
 
