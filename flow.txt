@@ -3,16 +3,16 @@ flow:
 intro screen>>[pick size,seed, num of mines] or [quit]
 <intro screen dynamically updates entry boxes with (%_of_mines to num_of_mines) vs (x*y), rounded>
 
-	create [mine_field]
-		if rand < (mines/num_of_sq):
-			mine
-		else:
-			no mine
+    create [mine_field]
+        if rand < (mines/num_of_sq):
+            mine
+        else:
+            no mine
 
-	parse_mine_field
-		update squares_dict[x][y]:prox_num
-			
-	
+    parse_mine_field
+        update sqr_dict[x#y#].prox_num
+            
+    
 Ready.
 user left clicks...
 
@@ -20,19 +20,19 @@ how to process a click?
 
 
 decide
-	mine?
-		game over
-		show all mines
-	open square?
-		open the field (remove button widgets/replace w/ labels)
-		draw new numbers in right position
+    mine?
+        game over
+        show all mines
+    open square?
+        open the field (remove button widgets/replace w/ labels)
+        draw new numbers in right position
 
 user right clicks...
-	untapped square?
-		place flag
-	already untapped?
-		pass
-		
+    untapped square?
+        place flag
+    already untapped?
+        pass
+        
 User clicks 'done'...
-	show mines: Lose (prorate points??)
-	if all mines flagged: WIN!
+    show mines: Lose (prorate points??)
+    if all mines flagged: WIN!
