@@ -9,6 +9,15 @@ intro screen>>[pick size,seed, num of mines] or [quit]
         else:
             no mine
 
+        create button with x,y call-back
+        translator function? returns x,y??
+        a 'translator' would get called with x,y as params
+        and then?? do what? leftclick is open sqr, game over
+        if mine. right click is just flag/question-mark.
+        just need to keep track of each square's info which 
+        gets changed from left/right click.
+        
+        
     parse_mine_field
         update sqr_dict[x#y#].prox_num
             
@@ -17,6 +26,7 @@ Ready.
 user left clicks...
 
 how to process a click?
+
 
 
 decide
@@ -29,8 +39,8 @@ decide
 
 user right clicks...
     untapped square?
-        place flag
-    already untapped?
+        place flag,then '?',then clear
+    already tapped?
         pass
         
 User clicks 'done'...
