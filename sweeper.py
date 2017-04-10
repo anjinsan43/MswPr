@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import messagebox as tkMessageBox
 from tkinter import ttk
 from random import random as rand
+from functools import partial
 
 
 class Square(object):
@@ -10,7 +11,9 @@ class Square(object):
     def __init__(self):
         self.mine_yn = False
         self.flag_yn = False
-        self.prox_num = 0   # number of nearby mines, parse_mines() will fill this in.
+        # prox_num is thenumber of nearby mines,
+        # parse_mines() will fill this in.
+        self.prox_num = 0
         self.button = None  # for ttk.Button instance(s).
         
         
@@ -41,8 +44,9 @@ def create_mine_field():
             if sqr_dict[coord(x,y)].mine_yn:  
                 t = '*'
             else: t = ' '
-            cmd = 'left_click(' + str(eval(str(x)))+','+str(eval(str(y)))+')'
-            sqr_dict[coord(x,y)].button = ttk.Button(mine_frame, text=t, width=3,command=lambda: left_click(str(eval(str(x)))+','+str(eval(str(y)))) )
+            cmd = partial(left_click, x, y)
+            sqr_dict[coord(x,y)].button = ttk.Button(mine_frame,
+                                          text=t, width=3,command=cmd)
             sqr_dict[coord(x,y)].button.grid(column=x, row=y)
             #mine_frame.update() #???
             
@@ -83,8 +87,9 @@ def parse_mines():
                 sqr_dict[coord(x,y)].prox_num = n
                 sqr_dict[coord(x,y)].button.configure(text=str(n)) #(debug) show n on each button.
             n = 0
-
-
+        mine_frame.update()
+    
+    
 def root_close():
     if tkMessageBox.askokcancel("Quit", "You don't want to quit."):
         root.destroy()
