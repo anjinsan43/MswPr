@@ -105,16 +105,21 @@ def coord(x,y):
     
 
 def left_click(x,y):
+    global sqr_dict
     print(coord(x,y))
+    sqr_dict[coord(x,y)].button.destroy()
+    sqr_dict[coord(x,y)].button = ttk.Label(mine_frame,text='   ',
+                                  padding="12 50 1 100").grid(column=x, row=y)
+    
 
 sqr_dict = {}
 root = tk.Tk()
 root.title("MS")
 
 x_str = tk.StringVar()
-x_str.set('25')
+x_str.set('5')
 y_str = tk.StringVar()
-y_str.set('15')
+y_str.set('5')
 
 mines_pct_str = tk.StringVar()
 mines_pct_str.set('30')
