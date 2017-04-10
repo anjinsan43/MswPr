@@ -44,9 +44,12 @@ def create_mine_field():
             if sqr_dict[coord(x,y)].mine_yn:  
                 t = '*'
             else: t = ' '
+            #create button for square with command callback func.
             cmd = partial(left_click, x, y)
-            sqr_dict[coord(x,y)].button = ttk.Button(mine_frame,
-                                          text=t, width=3,command=cmd)
+            sqr_dict[coord(x,y)].button = tk.Button(mine_frame,
+                                          text=t, width=3,
+                                          command=cmd)
+                                          
             sqr_dict[coord(x,y)].button.grid(column=x, row=y)
             #mine_frame.update() #???
             
@@ -85,7 +88,8 @@ def parse_mines():
 
             if sqr_dict[coord(x,y)].mine_yn == False:
                 sqr_dict[coord(x,y)].prox_num = n
-                sqr_dict[coord(x,y)].button.configure(text=str(n)) #(debug) show n on each button.
+                 #(debug) show n on each button.
+                sqr_dict[coord(x,y)].button.configure(text=str(n))
             n = 0
         mine_frame.update()
     
@@ -107,9 +111,8 @@ def coord(x,y):
 def left_click(x,y):
     global sqr_dict
     print(coord(x,y))
-    sqr_dict[coord(x,y)].button.destroy()
-    sqr_dict[coord(x,y)].button = ttk.Label(mine_frame,text='   ',
-                                  padding="12 50 1 100").grid(column=x, row=y)
+    sqr_dict[coord(x,y)].button.config(relief="sunken", text="")
+    #sqr_dict[coord(x,y)].button =  #ttk.Label(mine_frame,text='   ',padding="12 50 1 100").grid(column=x, row=y)
     
 
 sqr_dict = {}
