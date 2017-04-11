@@ -11,10 +11,11 @@ class Square(object):
     def __init__(self):
         self.mine_yn = False
         self.flag_yn = False
+        self.Qmark_yn = False
         # prox_num is thenumber of nearby mines,
         # parse_mines() will fill this in.
         self.prox_num = 0
-        self.button = None  # for ttk.Button instance(s).
+        self.button = None  # for tk.Button instance(s).
         
         
         
@@ -47,7 +48,7 @@ def create_mine_field():
             #create button for square with command callback func.
             cmd = partial(left_click, x, y)
             sqr_dict[coord(x,y)].button = tk.Button(mine_frame,
-                                          text=t, width=3,
+                                          text=t, width=1,
                                           command=cmd)
                                           
             sqr_dict[coord(x,y)].button.grid(column=x, row=y)
@@ -111,7 +112,7 @@ def coord(x,y):
 def left_click(x,y):
     global sqr_dict
     print(coord(x,y))
-    sqr_dict[coord(x,y)].button.config(relief="sunken", text="")
+    sqr_dict[coord(x,y)].button.config(state="disabled", relief="sunken", text="")
     #sqr_dict[coord(x,y)].button =  #ttk.Label(mine_frame,text='   ',padding="12 50 1 100").grid(column=x, row=y)
     
 
