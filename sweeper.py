@@ -12,7 +12,7 @@ class Square(object):
         self.mine_yn = False
         self.flag_yn = False
         self.Qmark_yn = False
-        # prox_num is thenumber of nearby mines,
+        # prox_num is the number of nearby mines,
         # parse_mines() will fill this in.
         self.prox_num = 0
         self.button = None  # for tk.Button instance(s).
@@ -66,7 +66,7 @@ def parse_mines():
     global mine_frame
     #print('in parse_mines, sqr_dict='+str(sqr_dict))
 
-    def try_a_square(x,y): #sq = coordinate string(key)
+    def try_a_square(x,y): 
         try:
             if sqr_dict[coord(x,y)].mine_yn == True:  return 1
             if sqr_dict[coord(x,y)].mine_yn == False: return 0
@@ -113,7 +113,7 @@ def left_click(x,y):
     global sqr_dict
     print(coord(x,y))
     sqr_dict[coord(x,y)].button.config(state="disabled", relief="sunken", text="")
-    #sqr_dict[coord(x,y)].button =  #ttk.Label(mine_frame,text='   ',padding="12 50 1 100").grid(column=x, row=y)
+    
     
 
 sqr_dict = {}
