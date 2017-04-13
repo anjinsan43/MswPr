@@ -4,6 +4,7 @@ from tkinter import messagebox as tkMessageBox
 from tkinter import ttk
 from random import random as rand
 from functools import partial
+import sys
 
 
 class Square(object):
@@ -71,7 +72,6 @@ def parse_mines():
             if sqr_dict[coord(x,y)].mine_yn == True:  return 1
             if sqr_dict[coord(x,y)].mine_yn == False: return 0
         except KeyError:
-            #print('KeyError for '+sq)
             return 0
             
     n = 0
@@ -103,30 +103,36 @@ def mine_frame_close(): #back to main menu
     root.deiconify()  # un-withdraw root
     mine_frame.destroy()
 
-
     
 def coord(x,y):
     return 'x'+str(x)+'y'+str(y)
     
 
+def clear_sq(x,y):
+    global sqr_dict
+    sqr_dict[coord(x,y)].button.config( state="disabled",
+                                        relief="sunken",
+                                        text="" )
+                                        
+            
 def left_click(x,y):
     global sqr_dict
-    print(coord(x,y))
-    sqr_dict[coord(x,y)].button.config(state="disabled", relief="sunken", text="")
+    sq = sqr_dict[coord(x,y)]
     
-    
+    if (sq.mine_yn) and (not sq.flag_yn): game_over()
+
 
 sqr_dict = {}
 root = tk.Tk()
 root.title("MS")
 
 x_str = tk.StringVar()
-x_str.set('5')
+x_str.set('15')
 y_str = tk.StringVar()
-y_str.set('5')
+y_str.set('9')
 
 mines_pct_str = tk.StringVar()
-mines_pct_str.set('30')
+mines_pct_str.set('10')
 
 
 startframe = ttk.Frame(root)
