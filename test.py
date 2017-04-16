@@ -39,34 +39,19 @@ def left_click(x,y):
 9                  S.push(w)
 
     
-    S = [(x,y)]
-    while not len(S):
-        v = pop(x,y)
-        if v is (sq.prox_num == 0) and (not (sq.flag_yn or sq.Qmark_yn)):
-            clear_sq(x,y)
-            
-            #check North
-            try:
-                push(x,y-1)
-            except KeyError:
-                pass
-
-
-            (x+1,y)  #N
-            (x,y-1)  #S
-            (x,y+1)  #E
-            (x-1,y)  #W
+    S = [[x,y]]
+    while len(S):
+        x,y = S.pop()
+        print('Popped: ' + coord(x,y))
+        q = sqr_dict[coord(x,y)]
+ 
+        clear_sq(x,y)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        #check North
+        try:
+            q = sqr_dict[coord(x,y-1)]
+            if (q.prox_num == 0) and (not (q.flag_yn or q.Qmark_yn)):
+                S.append([x,y-1])
+                print('Pushed North: ' + coord(x,y-1))
+        except KeyError:
+            pass

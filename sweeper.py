@@ -4,7 +4,7 @@ from tkinter import messagebox as tkMessageBox
 from tkinter import ttk
 from random import random as rand
 from functools import partial
-import sys
+
 
 
 class Square(object):
@@ -13,6 +13,7 @@ class Square(object):
         self.mine_yn = False
         self.flag_yn = False
         self.Qmark_yn = False
+        self.cleared = False
         # prox_num is the number of nearby mines,
         # parse_mines() will fill this in.
         self.prox_num = 0
@@ -113,14 +114,75 @@ def clear_sq(x,y):
     sqr_dict[coord(x,y)].button.config( state="disabled",
                                         relief="sunken",
                                         text="" )
-                                        
+    sqr_dict[coord(x,y)].cleared = True
+    
+def check_can_open(x,y):
+    global sqr_dict
+    
+    try:
+        sq = sqr_dict[coord(x,y)]
+    except KeyError:
+        print('no-go: ' + coord(x,y))
+        return False
+        
+    if ((not sq.cleared and sq.prox_num == 0) and
+       (not (sq.flag_yn or sq.Qmark_yn))):
+        return True
+    else:
+        return False
+        
+        
             
 def left_click(x,y):
     global sqr_dict
     sq = sqr_dict[coord(x,y)]
     
+    #Hit a mine.
     if (sq.mine_yn) and (not sq.flag_yn): game_over()
 
+    #Hit an open square, now open up field...
+    # non-recursive depth first search algorithm
+    if check_can_open(x,y):
+        S = [[x,y]]
+        while len(S):
+            x,y = S.pop()
+            print('Popped: ' + coord(x,y))
+            sq = sqr_dict[coord(x,y)]
+    
+            clear_sq(x,y)
+            
+            #check North
+            if check_can_open(x,y-1):
+                S.append([x,y-1])
+                print('Pushed North: ' + coord(x,y-1))
+                print('top of stack: ' + str(S[-1]))
+        
+        
+            #check South
+            if check_can_open(x,y+1):
+                S.append([x,y+1])
+                print('Pushed South: ' + coord(x,y+1))
+                print('top of stack: ' + str(S[-1]))
+
+
+                
+            #check East
+            if check_can_open(x+1,y):
+                S.append([x+1,y])
+                print('Pushed East: ' + coord(x+1,y))
+                print('top of stack: ' + str(S[-1]))
+
+                
+            #check West
+            if check_can_open(x-1,y):
+                S.append([x-1,y])
+                print('Pushed West: ' + coord(x-1,y))
+                print('top of stack: ' + str(S[-1]))
+        #end while len(S)
+    
+    
+def game_over(): mine_frame_close()
+    
 
 sqr_dict = {}
 root = tk.Tk()
