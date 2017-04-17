@@ -49,11 +49,12 @@ def create_mine_field():
                 t = '*'
             else: t = ' '
             #create button for square with command callback func.
-            cmd = partial(left_click, x, y)
+            cmd_L = partial(left_click, x, y)
+            cmd_R = partial(right_click, x, y)
             sqr_dict[coord(x,y)].button = tk.Button(mine_frame,
                                           text=t, width=1,
-                                          command=cmd)
-                                          
+                                          command=cmd_L)
+            sqr_dict[coord(x,y)].button.bind('<Button-3>', cmd_R) #right click
             sqr_dict[coord(x,y)].button.grid(column=x, row=y)
             #mine_frame.update() #???
             
@@ -114,10 +115,11 @@ def clear_sq(x,y):
     global sqr_dict
     sqr_dict[coord(x,y)].button.config( state="disabled",
                                         relief="sunken",
-                                        text="" )
+                                        text="x" )
     sqr_dict[coord(x,y)].cleared = True
     sleep(0.075)
     mine_frame.update()
+    
     
 def check_can_open(x,y):
     global sqr_dict
@@ -149,40 +151,49 @@ def left_click(x,y):
         S = [[x,y]]
         while len(S):
             x,y = S.pop()
-            print('Popped: ' + coord(x,y))
             sq = sqr_dict[coord(x,y)]
-    
             clear_sq(x,y)
             
             #check North
             if check_can_open(x,y-1):
                 S.append([x,y-1])
-                print('Pushed North: ' + coord(x,y-1))
-                print('top of stack: ' + str(S[-1]))
-        
-        
+                
             #check South
             if check_can_open(x,y+1):
                 S.append([x,y+1])
-                print('Pushed South: ' + coord(x,y+1))
-                print('top of stack: ' + str(S[-1]))
-
-
                 
             #check East
             if check_can_open(x+1,y):
                 S.append([x+1,y])
-                print('Pushed East: ' + coord(x+1,y))
-                print('top of stack: ' + str(S[-1]))
-
                 
             #check West
             if check_can_open(x-1,y):
                 S.append([x-1,y])
-                print('Pushed West: ' + coord(x-1,y))
-                print('top of stack: ' + str(S[-1]))
-        #end while len(S)
+        
     
+    
+def right_click(x,y,b):
+    global sqr_dict
+    print('Right click on ' + coord(x,y))
+    
+    sq = sqr_dict[coord(x,y)]
+    if not sq.cleared:
+        if not sq.flag_yn and not sq.Qmark_yn:
+            sqr_dict[coord(x,y)].flag_yn = True
+            sqr_dict[coord(x,y)].Qmark_yn = False
+            sqr_dict[coord(x,y)].button.config(text='F')
+            return
+        if sq.flag_yn:
+            sqr_dict[coord(x,y)].flag_yn = False
+            sqr_dict[coord(x,y)].Qmark_yn = True
+            sqr_dict[coord(x,y)].button.config(text='?')
+            return
+        if sq.Qmark_yn:
+            sqr_dict[coord(x,y)].flag_yn = False
+            sqr_dict[coord(x,y)].Qmark_yn = False
+            sqr_dict[coord(x,y)].button.config(text=' ')
+            return
+            
     
 def game_over(): mine_frame_close()
     
