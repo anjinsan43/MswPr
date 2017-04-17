@@ -4,6 +4,7 @@ from tkinter import messagebox as tkMessageBox
 from tkinter import ttk
 from random import random as rand
 from functools import partial
+from time import sleep
 
 
 
@@ -79,14 +80,14 @@ def parse_mines():
     for x in range(int(x_str.get() )):
         for y in range(int(y_str.get() )):
             #check the 8 adjacent squares.
-            n = n + try_a_square( x+1,y+1 ) #SE
-            n = n + try_a_square( x+1,y   ) #E
-            n = n + try_a_square( x+1,y-1 ) #NE
-            n = n + try_a_square( x,  y+1 ) #S
             n = n + try_a_square( x,  y-1 ) #N
-            n = n + try_a_square( x-1,y+1 ) #SW
+            n = n + try_a_square( x,  y+1 ) #S
+            n = n + try_a_square( x+1,y   ) #E
             n = n + try_a_square( x-1,y   ) #W
+            n = n + try_a_square( x+1,y-1 ) #NE
             n = n + try_a_square( x-1,y-1 ) #NW
+            n = n + try_a_square( x+1,y+1 ) #SE
+            n = n + try_a_square( x-1,y+1 ) #SW
 
             if sqr_dict[coord(x,y)].mine_yn == False:
                 sqr_dict[coord(x,y)].prox_num = n
@@ -115,6 +116,8 @@ def clear_sq(x,y):
                                         relief="sunken",
                                         text="" )
     sqr_dict[coord(x,y)].cleared = True
+    sleep(0.075)
+    mine_frame.update()
     
 def check_can_open(x,y):
     global sqr_dict
@@ -189,9 +192,9 @@ root = tk.Tk()
 root.title("MS")
 
 x_str = tk.StringVar()
-x_str.set('15')
+x_str.set('35')
 y_str = tk.StringVar()
-y_str.set('9')
+y_str.set('20')
 
 mines_pct_str = tk.StringVar()
 mines_pct_str.set('10')
