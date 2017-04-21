@@ -33,12 +33,12 @@ def create_mine_field():
     
     root.withdraw()
 
-    # create grid of squares (buttons)
+    # loop to create grid of squares (button widgets)
     for x in range(int(x_str.get() )):
         for y in range(int(y_str.get() )):
             sqr_dict[coord(x,y)] = Square()
             
-            #populate with mines
+            #populate randomly with mines
             if ( rand()*100 < int(mines_pct_str.get()) ):
                 sqr_dict[coord(x,y)].mine_yn = True
             else:
@@ -46,10 +46,10 @@ def create_mine_field():
 
             # draw boxes
             if sqr_dict[coord(x,y)].mine_yn:  
-                t = '*'
+                t = ' ' # '*' (debug)
             else: t = ' '
             #create button for square with command callback func.
-            cmd_L = partial(left_click, x, y)
+            cmd_L = partial(left_click,  x, y)
             cmd_R = partial(right_click, x, y)
             sqr_dict[coord(x,y)].button = tk.Button(mine_frame,
                                           text=t, width=1,
@@ -93,7 +93,7 @@ def parse_mines():
             if sqr_dict[coord(x,y)].mine_yn == False:
                 sqr_dict[coord(x,y)].prox_num = n
                  #(debug) show n on each button.
-                sqr_dict[coord(x,y)].button.configure(text=str(n))
+                #sqr_dict[coord(x,y)].button.configure(text=str(n))
             n = 0
         mine_frame.update()
     
@@ -115,9 +115,9 @@ def clear_sq(x,y):
     global sqr_dict
     sqr_dict[coord(x,y)].button.config( state="disabled",
                                         relief="sunken",
-                                        text="x" )
+                                        text=str(sqr_dict[coord(x,y)].prox_num) )
     sqr_dict[coord(x,y)].cleared = True
-    sleep(0.075)
+    sleep(0.02)
     mine_frame.update()
     
     
@@ -127,11 +127,10 @@ def check_can_open(x,y):
     try:
         sq = sqr_dict[coord(x,y)]
     except KeyError:
-        print('no-go: ' + coord(x,y))
         return False
         
-    if ((not sq.cleared and sq.prox_num == 0) and
-       (not (sq.flag_yn or sq.Qmark_yn))):
+    if (not sq.cleared and not sq.mine_yn and
+        not (sq.flag_yn or sq.Qmark_yn) ):
         return True
     else:
         return False
@@ -148,10 +147,11 @@ def left_click(x,y):
     #Hit an open square, now open up field...
     # non-recursive depth first search algorithm
     if check_can_open(x,y):
+    
+        mine_frame.config(cursor="none")
         S = [[x,y]]
         while len(S):
             x,y = S.pop()
-            sq = sqr_dict[coord(x,y)]
             clear_sq(x,y)
             
             #check North
@@ -195,7 +195,17 @@ def right_click(x,y,b):
             return
             
     
-def game_over(): mine_frame_close()
+def game_over():
+    global sqr_dict
+    
+    for x in range(int(x_str.get() )):
+        for y in range(int(y_str.get() )):
+            if sqr_dict[coord(x,y)].mine_yn: # and not sqr_dict[coord(x,y).flag_yn:
+                sqr_dict[coord(x,y)].button.config(text='*')
+
+    mine_frame.update()
+    sleep(2.5)
+    mine_frame_close()
     
 
 sqr_dict = {}
@@ -208,7 +218,7 @@ y_str = tk.StringVar()
 y_str.set('20')
 
 mines_pct_str = tk.StringVar()
-mines_pct_str.set('10')
+mines_pct_str.set('20')
 
 
 startframe = ttk.Frame(root)
